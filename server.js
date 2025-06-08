@@ -31,9 +31,14 @@ app.get('/auth', (req, res) => {
 app.get('/oauth2callback', async (req, res) => {
   const { code } = req.query;
   if (!code) return res.status(400).send('Missing code');
-  const { tokens } = await oAuth2Client.getToken(code);
-  req.session.tokens = tokens;
-  res.redirect('/');
+  try {
+    const { tokens } = await oAuth2Client.getToken(code);
+    req.session.tokens = tokens;
+    res.redirect('/');
+  } catch (err) {
+    console.error('Token exchange failed:', err);
+    res.status(500).send('Failed to authenticate with Google');
+  }
 });
 
 app.get('/api/widget-data', async (req, res) => {
