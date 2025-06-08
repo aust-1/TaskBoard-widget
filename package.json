@@ -1,0 +1,27 @@
+{
+  "name": "taskboard-widget",
+  "version": "1.0.0",
+  "description": "",
+  "main": "index.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/Captainbleu/TaskBoard-widget.git"
+  },
+  "keywords": [],
+  "author": "",
+  "license": "ISC",
+  "bugs": {
+    "url": "https://github.com/Captainbleu/TaskBoard-widget/issues"
+  },
+  "homepage": "https://github.com/Captainbleu/TaskBoard-widget#readme",
+  "dependencies": {
+    "adaptivecards": "^3.0.5",
+    "dotenv": "^16.5.0",
+    "express": "^5.1.0",
+    "express-session": "^1.18.1",
+    "googleapis": "^150.0.1"
+  }
+}
