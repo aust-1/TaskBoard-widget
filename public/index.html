@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html lang="fr">
+    <head>
+        <meta charset="utf-8">
+        <title>TaskBoard Widget</title>
+    </head>
+    <body>
+        <h1>TaskBoard</h1>
+        <input id="list-id" placeholder="ID de la liste (@default)" />
+        <button id="load">Charger les tâches</button>
+        <ul id="tasks"></ul>
+        <script>
+    async function load() {
+      const listId = document.getElementById('list-id').value || '@default';
+      const res = await fetch('/api/widget-data?listId=' + encodeURIComponent(listId));
+      const data = await res.json();
+      if (data.needsAuth) {
+        window.location = '/auth';
+        return;
+      }
+      const tasksList = document.getElementById('tasks');
+      tasksList.innerHTML = '';
+      (data.tasks || []).forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = t.title;
+        tasksList.appendChild(li);
+      });
+    }
+    document.getElementById('load').onclick = load;
+    window.onload = load;
+  </script>
+    </body>
+</html>

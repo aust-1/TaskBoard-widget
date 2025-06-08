@@ -18,8 +18,8 @@
     "start_url": "/index.html",
     "widgets": [
         {
-            "data": "/api/widget-data",
-            "ms_ac_template": "widgets/mon-widget.json",
+            "data": "/api/widget-data?listId=@default",
+            "ms_ac_template": "widgets/taskboard.json",
             "name": "TaskBoard",
             "update": 1800
         }
