@@ -3,11 +3,23 @@ const express = require('express');
 const session = require('express-session');
 const { google } = require('googleapis');
 const path = require('path');
+const { randomBytes, createHash } = require('crypto');
+
+function base64URLEncode(buffer) {
+  return buffer.toString('base64')
+    .replace(/\+/g, '-')
+    .replace(/\//g, '_')
+    .replace(/=+$/, '');
+}
+
+function sha256(buffer) {
+  return createHash('sha256').update(buffer).digest();
+}
 
 const app = express();
 
 app.use(session({
-  secret: process.env.SESSION_SECRET || 'change_me',
+  secret: process.env.SESSION_SECRET || 'change_me_to_a_strong_secret',
   resave: false,
   saveUninitialized: true
 }));
@@ -21,23 +33,36 @@ const oAuth2Client = new google.auth.OAuth2(
 );
 
 app.get('/auth', (req, res) => {
+  const codeVerifier = base64URLEncode(randomBytes(32));
+  req.session.codeVerifier = codeVerifier;
+  const codeChallenge = base64URLEncode(sha256(codeVerifier));
+
   const authUrl = oAuth2Client.generateAuthUrl({
     access_type: 'offline',
-    scope: ['https://www.googleapis.com/auth/tasks.readonly']
+    scope: ['https://www.googleapis.com/auth/tasks.readonly'],
+    code_challenge: codeChallenge,
+    code_challenge_method: 'S256'
   });
   res.redirect(authUrl);
 });
 
 app.get('/oauth2callback', async (req, res) => {
-  const { code } = req.query;
-  if (!code) return res.status(400).send('Missing code');
+  const code = req.query.code;
+  if (!code) {
+    return res.status(400).send('Missing authorization code');
+  }
+
   try {
-    const { tokens } = await oAuth2Client.getToken(code);
+    const { tokens } = await oAuth2Client.getToken({
+      code,
+      codeVerifier: req.session.codeVerifier,
+      redirect_uri: oAuth2Client.redirectUri
+    });
     req.session.tokens = tokens;
     res.redirect('/');
   } catch (err) {
     console.error('Token exchange failed:', err);
-    res.status(500).send('Failed to authenticate with Google');
+    res.status(500).send('Failed to retrieve access token');
   }
 });
 
@@ -46,9 +71,10 @@ app.get('/api/widget-data', async (req, res) => {
     return res.json({ needsAuth: true });
   }
 
-  const listId = req.query.listId || '@default';
   oAuth2Client.setCredentials(req.session.tokens);
   const tasks = google.tasks({ version: 'v1', auth: oAuth2Client });
+  const listId = req.query.listId || '@default';
+
   try {
     const response = await tasks.tasks.list({
       tasklist: listId,
@@ -57,7 +83,7 @@ app.get('/api/widget-data', async (req, res) => {
     });
     res.json({ needsAuth: false, tasks: response.data.items || [] });
   } catch (err) {
-    console.error(err);
+    console.error('Error fetching tasks:', err);
     res.status(500).json({ error: 'Failed to fetch tasks' });
   }
 });

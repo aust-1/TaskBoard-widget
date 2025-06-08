@@ -21,6 +21,7 @@ Ce projet fournit un petit serveur Node.js permettant d'afficher les tâches d'u
 
    Les identifiants OAuth2 doivent avoir pour URL de redirection `http://localhost:3000/oauth2callback`.
    En cas d'erreur `invalid_grant`, assurez-vous que cette URL correspond exactement à celle configurée dans la console Google.
+   Si le message mentionne `code_verifier`, supprimez cette valeur avant l'échange de jeton comme montré dans `server.js`.
 
 ## Utilisation
 
