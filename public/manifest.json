@@ -1,5 +1,7 @@
 {
     "background_color": "#ffffff",
+    "description": "Affichez et gérez vos tâches Google Tasks dans un widget TaskBoard.",
+    "dir": "ltr",
     "display": "standalone",
     "icons": [
         {
@@ -13,9 +15,12 @@
             "type": "image/png"
         }
     ],
-    "name": "TaskBoard Widget",
-    "short_name": "Tasks",
-    "start_url": ".",
+    "id": "/",
+    "lang": "fr",
+    "orientation": "portrait",
+    "scope": ".",
+    "screenshots": [],
+    "theme_color": "#317EFB",
     "widgets": [
         {
             "data": "https://taskboard-widget.onrender.com/api/widget-data?listId=@default",
