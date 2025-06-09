@@ -1,7 +1,7 @@
 async function renderWidget() {
   const container = document.getElementById('widget');
   try {
-    const res = await fetch('/api/widget-card');
+    const res = await fetch('https://taskboard-widget.onrender.com/api/widget-card');
     if (!res.ok) {
       container.textContent = `Erreur HTTP ${res.status}`;
       return;
