@@ -51,7 +51,22 @@
             "url": "https://taskboard-widget.onrender.com/?task=%s"
         }
     ],
-    "scope": ".",
+    "related_applications": [
+        {
+            "id": "/",
+            "platform": "webapp",
+            "url": "https://captainbleu.github.io/TaskBoard-widget/manifest.json"
+        }
+    ],
+    "scope": "/TaskBoard-widget/",
+    "scope_extensions": [
+        {
+            "origin": "https://captainbleu.github.io",
+            "scopes": [
+                "/TaskBoard-widget/"
+            ]
+        }
+    ],
     "screenshots": [],
     "share_target": {
         "action": "/share-target",
@@ -78,7 +93,7 @@
             "url": "/?listId=@default"
         }
     ],
-    "start_url": ".",
+    "start_url": "/TaskBoard-widget/index.html",
     "theme_color": "#317EFB",
     "widgets": [
         {

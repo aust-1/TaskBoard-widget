@@ -17,7 +17,7 @@
   "devDependencies": {
     "workbox-cli": "^7.3.0"
   },
-  "homepage": "https://github.com/Captainbleu/TaskBoard-widget#readme",
+  "homepage": "https://captainbleu.github.io/TaskBoard-widget",
   "keywords": [],
   "license": "ISC",
   "main": "index.js",
