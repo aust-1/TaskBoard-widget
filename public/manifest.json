@@ -7,7 +7,7 @@
     "start_url": "/index.html",
     "widgets": [
         {
-            "data": "https://taskboard-widget.onrender.com/api/widget-data?listId=@default",
+            "data": "/api/widget-data?listId=@default",
             "ms_ac_template": "widgets/taskboard.json",
             "name": "TaskBoard",
             "tag": "taskboard-widget",
