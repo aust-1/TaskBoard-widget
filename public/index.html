@@ -16,7 +16,7 @@
         <script>
     // fetch and populate available task lists
     async function loadLists() {
-      const res = await fetch('/api/lists');
+      const res = await fetch('https://taskboard-widget.onrender.com/api/lists');
       const data = await res.json();
       if (data.needsAuth) { window.location = '/auth'; return; }
       const select = document.getElementById('list-select');
@@ -32,7 +32,7 @@
     // fetch and display tasks for selected list
     async function loadTasks() {
       const listId = document.getElementById('list-select').value;
-      const res = await fetch('/api/widget-data?listId=' + encodeURIComponent(listId));
+      const res = await fetch('https://taskboard-widget.onrender.com/api/widget-data?listId=' + encodeURIComponent(listId));
       const data = await res.json();
       if (data.needsAuth) { window.location = '/auth'; return; }
       const tasksList = document.getElementById('tasks');
