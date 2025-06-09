@@ -22,6 +22,9 @@ const app = express();
 
 app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
 
+app.use(express.urlencoded({ extended: true }));
+app.use(express.json());
+
 app.use(session({
   secret: process.env.SESSION_SECRET || 'change_me_to_a_strong_secret',
   resave: false,
@@ -168,6 +171,15 @@ app.get('/api/widget-card', async (req, res) => {
   };
   res.json(card);
 });
+
+app.post('/share-target', (req, res) => {
+  res.redirect('/');
+});
+
+app.post('/open-file', (req, res) => {
+  res.redirect('/');
+});
+
 
 const port = process.env.PORT || 3000;
 app.listen(port, () => {

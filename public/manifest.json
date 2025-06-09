@@ -3,6 +3,23 @@
     "description": "Affichez et gérez vos tâches Google Tasks dans un widget TaskBoard.",
     "dir": "ltr",
     "display": "standalone",
+    "display_override": [
+        "window-controls-overlay"
+    ],
+    "edge_side_panel": {
+        "preferred_width": 480
+    },
+    "file_handlers": [
+        {
+            "accept": {
+                "text/plain": [
+                    ".todo"
+                ]
+            },
+            "action": "/open-file"
+        }
+    ],
+    "handle_links": "preferred",
     "icons": [
         {
             "sizes": "192x192",
@@ -17,11 +34,44 @@
     ],
     "id": "/",
     "lang": "fr",
+    "launch_handler": {
+        "client_mode": "focus-existing"
+    },
     "name": "TaskBoard Widget",
     "orientation": "portrait",
+    "protocol_handlers": [
+        {
+            "protocol": "web+task",
+            "url": "https://taskboard-widget.onrender.com/?task=%s"
+        }
+    ],
     "scope": ".",
     "screenshots": [],
+    "share_target": {
+        "action": "/share-target",
+        "enctype": "multipart/form-data",
+        "method": "POST",
+        "params": {
+            "text": "text",
+            "title": "title",
+            "url": "url"
+        }
+    },
     "short_name": "Tasks",
+    "shortcuts": [
+        {
+            "description": "Ouvrir la vue widget",
+            "name": "Ouvrir Widget",
+            "short_name": "Widget",
+            "url": "/widget.html"
+        },
+        {
+            "description": "Afficher la liste par défaut",
+            "name": "Liste par défaut",
+            "short_name": "Par défaut",
+            "url": "/?listId=@default"
+        }
+    ],
     "start_url": ".",
     "theme_color": "#317EFB",
     "widgets": [
