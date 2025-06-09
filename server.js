@@ -172,6 +172,27 @@ app.get('/api/widget-card', async (req, res) => {
   res.json(card);
 });
 
+app.get('/api/task', async (req, res) => {
+  if (!req.session.tokens) {
+    return res.json({ needsAuth: true });
+  }
+
+  const taskId = req.query.taskId;
+  const listId = req.query.listId || '@default';
+  if (!taskId) {
+    return res.status(400).json({ error: 'Missing taskId' });
+  }
+  try {
+    oAuth2Client.setCredentials(req.session.tokens);
+    const tasksApi = google.tasks({ version: 'v1', auth: oAuth2Client });
+    const response = await tasksApi.tasks.get({ tasklist: listId, task: taskId });
+    res.json({ needsAuth: false, task: response.data });
+  } catch (err) {
+    console.error('Error fetching task:', err);
+    res.status(500).json({ error: 'Failed to fetch task' });
+  }
+});
+
 app.post('/share-target', (req, res) => {
   res.redirect('/');
 });

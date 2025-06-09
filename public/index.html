@@ -31,28 +31,48 @@
         }
 
         // fetch and display tasks for selected list
-        async function loadTasks() {
-        const listId = document.getElementById('list-select').value;
-        const res = await fetch('https://taskboard-widget.onrender.com/api/widget-data?listId=' + encodeURIComponent(listId));
+  async function loadTasks() {
+  const listId = document.getElementById('list-select').value;
+  const res = await fetch('https://taskboard-widget.onrender.com/api/widget-data?listId=' + encodeURIComponent(listId));
+  const data = await res.json();
+  if (data.needsAuth) { window.location = 'https://taskboard-widget.onrender.com/auth'; return; }
+  const tasksList = document.getElementById('tasks');
+  tasksList.innerHTML = '';
+  (data.tasks || []).forEach(t => {
+      const li = document.createElement('li');
+      li.textContent = t.title;
+      tasksList.appendChild(li);
+  });
+  }
+
+  async function checkProtocolTask() {
+    const params = new URLSearchParams(window.location.search);
+    const taskId = params.get('task');
+    const listId = params.get('listId') || '@default';
+    if (taskId) {
+      try {
+        const res = await fetch(`https://taskboard-widget.onrender.com/api/task?taskId=${encodeURIComponent(taskId)}&listId=${encodeURIComponent(listId)}`);
         const data = await res.json();
         if (data.needsAuth) { window.location = 'https://taskboard-widget.onrender.com/auth'; return; }
-        const tasksList = document.getElementById('tasks');
-        tasksList.innerHTML = '';
-        (data.tasks || []).forEach(t => {
-            const li = document.createElement('li');
-            li.textContent = t.title;
-            tasksList.appendChild(li);
-        });
-        }
+        alert('T\u00e2che : ' + (data.task && data.task.title ? data.task.title : 'introuvable'));
+      } catch (err) {
+        console.error('Error loading task', err);
+      }
+    }
+  }
 
-        document.getElementById('load').onclick = loadTasks;
-        window.onload = async () => {
-        await loadLists();
-        await loadTasks();
-        };
-        </script>
+  document.getElementById('load').onclick = loadTasks;
+  window.onload = async () => {
+  await loadLists();
+  await loadTasks();
+  await checkProtocolTask();
+  };
+  </script>
         <script>
-          if ('serviceWorker' in navigator) {
+  if ('registerProtocolHandler' in navigator) {
+    navigator.registerProtocolHandler('web+task', `${location.origin}/?task=%s`, 'TaskBoard');
+  }
+  if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
               navigator.serviceWorker.register('sw.js')
                 .then(reg => {

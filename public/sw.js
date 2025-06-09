@@ -72,6 +72,20 @@ define(["./workbox-915e8d08"], (function (workbox) {
         ],
     );
 
+    workbox.routing.registerRoute(
+        ({ url }) => url.pathname.startsWith('/api/'),
+        new workbox.strategies.NetworkFirst({
+            cacheName: 'api-cache',
+            plugins: [
+            {
+                cacheWillUpdate: async ({ response }) => {
+                return response && response.status === 200 ? response : null;
+                }
+            }
+            ]
+        })
+    );
+
 
     // =========================
     // Widget Windows 11 events
