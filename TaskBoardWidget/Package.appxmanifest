@@ -2,24 +2,20 @@
 
 <Package
   xmlns="http://schemas.microsoft.com/appx/manifest/foundation/windows10"
-  xmlns:mp="http://schemas.microsoft.com/appx/2014/phone/manifest"
   xmlns:uap="http://schemas.microsoft.com/appx/manifest/uap/windows10"
+  xmlns:uap8="http://schemas.microsoft.com/appx/manifest/uap/windows10/8"
   xmlns:rescap="http://schemas.microsoft.com/appx/manifest/foundation/windows10/restrictedcapabilities"
-  IgnorableNamespaces="uap rescap">
+  IgnorableNamespaces="uap mp rescap">
 
   <Identity
     Name="3b9bd2bc-4117-4a95-9c0c-b7e6e7cd89fc"
     Publisher="CN=austin"
     Version="1.0.0.0" />
-
-  <mp:PhoneIdentity PhoneProductId="3b9bd2bc-4117-4a95-9c0c-b7e6e7cd89fc" PhonePublisherId="00000000-0000-0000-0000-000000000000"/>
-
   <Properties>
     <DisplayName>TaskBoardWidget</DisplayName>
     <PublisherDisplayName>austin</PublisherDisplayName>
     <Logo>Assets\StoreLogo.png</Logo>
   </Properties>
-
   <Dependencies>
     <TargetDeviceFamily Name="Windows.Universal" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
     <TargetDeviceFamily Name="Windows.Desktop" MinVersion="10.0.17763.0" MaxVersionTested="10.0.19041.0" />
@@ -28,24 +24,6 @@
   <Resources>
     <Resource Language="x-generate"/>
   </Resources>
-
-  <Extensions>
-  <Extension Category="windows.widgets">
-    <uap8:Widget xmlns:uap8="http://schemas.microsoft.com/appx/manifest/uap/windows10/8">
-      <DisplayName>TaskBoard</DisplayName>
-      <Tag>taskboard-widget</Tag>
-      <SupportedSizes>
-        <uap8:Size>Medium</uap8:Size>
-        <uap8:Size>Wide</uap8:Size>
-      </SupportedSizes>
-      <EntryPoint>TaskBoardWidgetCs.Widget.WidgetProvider</EntryPoint>
-      <!-- UpdateFrequency in minutes -->
-      <UpdateFrequency>30</UpdateFrequency>
-    </uap8:Widget>
-  </Extension>
-  </Extensions>
-
-
   <Applications>
     <Application Id="App"
       Executable="$targetnametoken$.exe"
@@ -66,4 +44,19 @@
     <rescap:Capability Name="runFullTrust" />
   </Capabilities>
 
+  <!-- Déclaration du widget -->
+  <Extensions>
+    <uap8:Extension Category="windows.widgets">
+      <uap8:Widget
+        EntryPoint="TaskBoardWidget.Widget.WidgetProvider"
+        Tag="taskboard-widget"
+        DisplayName="TaskBoard"
+        UpdateFrequency="30">
+        <uap8:SupportedSizes>
+          <uap8:Size>Medium</uap8:Size>
+          <uap8:Size>Wide</uap8:Size>
+        </uap8:SupportedSizes>
+      </uap8:Widget>
+    </uap8:Extension>
+  </Extensions>
 </Package>
