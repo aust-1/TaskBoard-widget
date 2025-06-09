@@ -43,7 +43,6 @@ define(["./workbox-915e8d08"], (function (workbox) {
             { url: "manifest.json", revision: "980187c41fe9f2687894ab9ed671a638" },
             { url: "widget.html", revision: "2dabfb9a8f5179c11f000898d6fb54c3" },
             { url: "widget.js", revision: "d48d7e124f19940f958d12af7b8519c0" },
-            { url: "offline.html", revision: null }
         ],
         {
             ignoreURLParametersMatching: [/^utm_/, /^fbclid$/]
@@ -65,6 +64,12 @@ define(["./workbox-915e8d08"], (function (workbox) {
         }
         ]
     })
+    );
+
+    workbox.precacheAndRoute(
+        [
+            { url: "offline.html", revision: null }
+        ],
     );
 
 
