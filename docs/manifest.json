@@ -1,5 +1,9 @@
 {
     "background_color": "#ffffff",
+    "categories": [
+        "productivity",
+        "utilities"
+    ],
     "description": "Affichez et gérez vos tâches Google Tasks dans un widget TaskBoard.",
     "dir": "ltr",
     "display": "standalone",
@@ -20,6 +24,7 @@
         }
     ],
     "handle_links": "preferred",
+    "iarc_rating_id": "e10plus",
     "icons": [
         {
             "sizes": "192x192",
@@ -39,6 +44,7 @@
     },
     "name": "TaskBoard Widget",
     "orientation": "portrait",
+    "prefer_related_applications": false,
     "protocol_handlers": [
         {
             "protocol": "web+task",

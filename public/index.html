@@ -54,7 +54,18 @@
           if ('serviceWorker' in navigator) {
             window.addEventListener('load', () => {
               navigator.serviceWorker.register('sw.js')
-                .then(reg => console.log('Service Worker registered:', reg))
+                .then(reg => {
+                  console.log('Service Worker registered:', reg);
+                  if ('sync' in reg) {
+                    reg.sync.register('sync-tasks').catch(console.error);
+                  }
+                  if ('periodicSync' in reg) {
+                    reg.periodicSync.register('update-tasks', { minInterval: 43200 }).catch(console.error);
+                  }
+                  if (Notification.permission === 'default') {
+                    Notification.requestPermission();
+                  }
+                })
                 .catch(err => console.error('SW registration failed:', err));
             });
           }
