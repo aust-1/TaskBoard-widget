@@ -1,0 +1,54 @@
+<!DOCTYPE html>
+<html lang="fr">
+
+    <head>
+        <meta charset="utf-8">
+        <title>TaskBoard Widget</title>
+    </head>
+
+    <body>
+        <h1>TaskBoard</h1>
+        <!-- dropdown for task lists -->
+        <select id="list-select"></select>
+        <button id="load">Charger les tâches</button>
+        <ul id="tasks"></ul>
+        <script>
+    // fetch and populate available task lists
+    async function loadLists() {
+      const res = await fetch('/api/lists');
+      const data = await res.json();
+      if (data.needsAuth) { window.location = '/auth'; return; }
+      const select = document.getElementById('list-select');
+      select.innerHTML = '';
+      data.lists.forEach(list => {
+        const opt = document.createElement('option');
+        opt.value = list.id;
+        opt.textContent = list.title;
+        select.appendChild(opt);
+      });
+    }
+
+    // fetch and display tasks for selected list
+    async function loadTasks() {
+      const listId = document.getElementById('list-select').value;
+      const res = await fetch('/api/widget-data?listId=' + encodeURIComponent(listId));
+      const data = await res.json();
+      if (data.needsAuth) { window.location = '/auth'; return; }
+      const tasksList = document.getElementById('tasks');
+      tasksList.innerHTML = '';
+      (data.tasks || []).forEach(t => {
+        const li = document.createElement('li');
+        li.textContent = t.title;
+        tasksList.appendChild(li);
+      });
+    }
+
+    document.getElementById('load').onclick = loadTasks;
+    window.onload = async () => {
+      await loadLists();
+      await loadTasks();
+    };
+  </script>
+    </body>
+
+</html>
