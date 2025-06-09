@@ -29,7 +29,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 const oAuth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
   process.env.GOOGLE_CLIENT_SECRET,
-  process.env.OAUTH2_REDIRECT || 'http://localhost:3000/oauth2callback'
+  process.env.OAUTH2_REDIRECT || 'https://taskboard-widget.onrender.com/oauth2callback'
 );
 
 app.get('/auth', (req, res) => {

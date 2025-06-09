@@ -5,7 +5,7 @@
             "isVisible": "${needsAuth}",
             "title": "Authentifier",
             "type": "Action.OpenUrl",
-            "url": "http://localhost:3000/auth"
+            "url": "https://taskboard-widget.onrender.com/auth"
         }
     ],
     "body": [
