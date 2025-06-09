@@ -16,9 +16,10 @@
             "weight": "Bolder"
         },
         {
+            "$data": "${tasks}",
             "items": [
                 {
-                    "text": "${#tasks}${title}\n— ${due? :due}${/tasks}",
+                    "text": "${concat(title, if(due, concat('\n— ', due), ''))}",
                     "type": "TextBlock",
                     "wrap": true
                 }
