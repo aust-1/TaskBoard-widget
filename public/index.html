@@ -18,7 +18,7 @@
     async function loadLists() {
       const res = await fetch('https://taskboard-widget.onrender.com/api/lists');
       const data = await res.json();
-      if (data.needsAuth) { window.location = '/auth'; return; }
+      if (data.needsAuth) { window.location = '/TaskBoard-widget/auth'; return; }
       const select = document.getElementById('list-select');
       select.innerHTML = '';
       data.lists.forEach(list => {
@@ -34,7 +34,7 @@
       const listId = document.getElementById('list-select').value;
       const res = await fetch('https://taskboard-widget.onrender.com/api/widget-data?listId=' + encodeURIComponent(listId));
       const data = await res.json();
-      if (data.needsAuth) { window.location = '/auth'; return; }
+      if (data.needsAuth) { window.location = '/TaskBoard-widget/auth'; return; }
       const tasksList = document.getElementById('tasks');
       tasksList.innerHTML = '';
       (data.tasks || []).forEach(t => {
