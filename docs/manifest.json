@@ -1,13 +1,24 @@
 {
     "background_color": "#ffffff",
     "display": "standalone",
-    "icons": [],
+    "icons": [
+        {
+            "sizes": "192x192",
+            "src": "assets/icons/icon-192.png",
+            "type": "image/png"
+        },
+        {
+            "sizes": "512x512",
+            "src": "assets/icons/icon-512.png",
+            "type": "image/png"
+        }
+    ],
     "name": "TaskBoard Widget",
-    "short_name": "TaskBoardWidget",
-    "start_url": "/index.html",
+    "short_name": "Tasks",
+    "start_url": ".",
     "widgets": [
         {
-            "data": "/api/widget-data?listId=@default",
+            "data": "https://taskboard-widget.onrender.com/api/widget-data?listId=@default",
             "ms_ac_template": "widgets/taskboard.json",
             "name": "TaskBoard",
             "tag": "taskboard-widget",
