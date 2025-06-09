@@ -88,6 +88,21 @@ app.get('/api/widget-data', async (req, res) => {
   }
 });
 
+app.get('/api/lists', async (req, res) => {
+  if (!req.session.tokens) {
+    return res.json({ needsAuth: true });
+  }
+  try {
+    oAuth2Client.setCredentials(req.session.tokens);
+    const tasksApi = google.tasks({ version: 'v1', auth: oAuth2Client });
+    const response = await tasksApi.tasklists.list({ maxResults: 100 });
+    res.json({ needsAuth: false, lists: response.data.items || [] });
+  } catch (err) {
+    console.error('Error fetching task lists:', err);
+    res.status(500).json({ error: 'Failed to fetch task lists' });
+  }
+});
+
 const port = process.env.PORT || 3000;
 app.listen(port, () => {
   console.log(`Server running on http://localhost:${port}`);

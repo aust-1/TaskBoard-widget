@@ -13,8 +13,8 @@
             "type": "image/png"
         }
     ],
-    "name": "Mon Widget PWA",
-    "short_name": "WidgetPWA",
+    "name": "TaskBoard Widget",
+    "short_name": "TaskBoardWidget",
     "start_url": "/index.html",
     "widgets": [
         {
