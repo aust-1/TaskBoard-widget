@@ -34,3 +34,10 @@ node server.js
 Ouvrez ensuite `http://localhost:3000` dans votre navigateur. Si vous n'êtes pas authentifié,
 le bouton vous redirigera vers Google pour vous connecter. Vous pouvez saisir l'ID de la liste
 Google Tasks à afficher (ou laisser `@default`).
+
+## Widget
+
+Une fois le serveur lancé, vous pouvez accéder à `http://localhost:3000/widget.html` pour
+obtenir un widget affichant vos tâches sous forme d'Adaptive Card. Cette page peut être
+intégrée dans un `<iframe>` au besoin. Les données proviennent de l'endpoint
+`/api/widget-card` qui renvoie la carte déjà remplie.

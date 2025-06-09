@@ -4,7 +4,9 @@ const session = require('express-session');
 const cors = require('cors');
 const { google } = require('googleapis');
 const path = require('path');
+const fs = require('fs');
 const { randomBytes, createHash } = require('crypto');
+const { Template, EvaluationContext } = require('adaptivecards-templating');
 
 function base64URLEncode(buffer) {
   return buffer.toString('base64')
@@ -28,6 +30,10 @@ app.use(session({
 }));
 
 app.use(express.static(path.join(__dirname, 'public')));
+
+const widgetTemplate = new Template(
+  JSON.parse(fs.readFileSync(path.join(__dirname, 'widgets', 'taskboard.json'), 'utf8'))
+);
 
 const oAuth2Client = new google.auth.OAuth2(
   process.env.GOOGLE_CLIENT_ID,
@@ -104,6 +110,32 @@ app.get('/api/lists', async (req, res) => {
     console.error('Error fetching task lists:', err);
     res.status(500).json({ error: 'Failed to fetch task lists' });
   }
+});
+
+app.get('/api/widget-card', async (req, res) => {
+  const listId = req.query.listId || '@default';
+  let data;
+  if (!req.session.tokens) {
+    data = { needsAuth: true, tasks: [] };
+  } else {
+    oAuth2Client.setCredentials(req.session.tokens);
+    const tasksApi = google.tasks({ version: 'v1', auth: oAuth2Client });
+    try {
+      const response = await tasksApi.tasks.list({
+        tasklist: listId,
+        maxResults: 5,
+        showCompleted: false
+      });
+      data = { needsAuth: false, tasks: response.data.items || [] };
+    } catch (err) {
+      console.error('Error fetching tasks:', err);
+      return res.status(500).json({ error: 'Failed to fetch tasks' });
+    }
+  }
+  const context = new EvaluationContext();
+  context.$root = data;
+  const cardJson = widgetTemplate.expand(context);
+  res.json(cardJson);
 });
 
 const port = process.env.PORT || 3000;
