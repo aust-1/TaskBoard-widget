@@ -1,6 +1,7 @@
 require('dotenv').config();
 const express = require('express');
 const session = require('express-session');
+const cors = require('cors');
 const { google } = require('googleapis');
 const path = require('path');
 const { randomBytes, createHash } = require('crypto');
@@ -17,6 +18,8 @@ function sha256(buffer) {
 }
 
 const app = express();
+
+app.use(cors({ origin: process.env.CORS_ORIGIN || '*' }));
 
 app.use(session({
   secret: process.env.SESSION_SECRET || 'change_me_to_a_strong_secret',
