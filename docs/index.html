@@ -14,7 +14,12 @@
         <button id="load">Charger les tâches</button>
         <ul id="tasks"></ul>
         <script>
-    // fetch and populate available task lists
+    if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+            navigator.serviceWorker.register('/TaskBoard-widget/sw.js');
+        });
+    }
+
     async function loadLists() {
       const res = await fetch('https://taskboard-widget.onrender.com/api/lists');
       const data = await res.json();

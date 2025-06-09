@@ -19,6 +19,14 @@
     "widgets": [
         {
             "data": "https://taskboard-widget.onrender.com/api/widget-data?listId=@default",
+            "icons": [
+                {
+                    "purpose": "any",
+                    "sizes": "48x48",
+                    "src": "assets/icons/widget-icon-48.png",
+                    "type": "image/png"
+                }
+            ],
             "ms_ac_template": "widgets/taskboard.json",
             "name": "TaskBoard",
             "tag": "taskboard-widget",

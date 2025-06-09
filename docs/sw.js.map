@@ -1,0 +1,23 @@
+{
+    "file": "sw.js",
+    "mappings": "0nBAmBAA,KAAKC,iBAAiB,WAAYC,IAC5BA,EAAMC,MAA4B,iBAApBD,EAAMC,KAAKC,MAC3BJ,KAAKK,iBAYTC,EAAAA,iBAAoC,CAClC,CACEC,IAAO,aACPC,SAAY,oCAEd,CACED,IAAO,gBACPC,SAAY,oCAEd,CACED,IAAO,cACPC,SAAY,oCAEd,CACED,IAAO,YACPC,SAAY,qCAEb,CACDC,4BAA+B,CAAC,QAAS",
+    "names": [
+        "self",
+        "addEventListener",
+        "event",
+        "data",
+        "type",
+        "skipWaiting",
+        "workbox_precaching_precacheAndRoute",
+        "url",
+        "revision",
+        "ignoreURLParametersMatching"
+    ],
+    "sources": [
+        "../../AppData/Local/Temp/b9603eea6c12c9d026637c771926aefa/sw.js"
+    ],
+    "sourcesContent": [
+        "import {precacheAndRoute as workbox_precaching_precacheAndRoute} from 'C:/Users/austin/CodeProjects/TaskBoard-widget/node_modules/workbox-precaching/precacheAndRoute.mjs';/**\n * Welcome to your Workbox-powered service worker!\n *\n * You'll need to register this file in your web app.\n * See https://goo.gl/nhQhGp\n *\n * The rest of the code is auto-generated. Please don't update this file\n * directly; instead, make changes to your Workbox build configuration\n * and re-run your build process.\n * See https://goo.gl/2aRDsh\n */\n\n\n\n\n\n\n\n\nself.addEventListener('message', (event) => {\n  if (event.data && event.data.type === 'SKIP_WAITING') {\n    self.skipWaiting();\n  }\n});\n\n\n\n\n/**\n * The precacheAndRoute() method efficiently caches and responds to\n * requests for URLs in the manifest.\n * See https://goo.gl/S9QRab\n */\nworkbox_precaching_precacheAndRoute([\n  {\n    \"url\": \"index.html\",\n    \"revision\": \"98b61df3f16693c28582ff59a036ff4a\"\n  },\n  {\n    \"url\": \"manifest.json\",\n    \"revision\": \"980187c41fe9f2687894ab9ed671a638\"\n  },\n  {\n    \"url\": \"widget.html\",\n    \"revision\": \"2dabfb9a8f5179c11f000898d6fb54c3\"\n  },\n  {\n    \"url\": \"widget.js\",\n    \"revision\": \"d48d7e124f19940f958d12af7b8519c0\"\n  }\n], {\n  \"ignoreURLParametersMatching\": [/^utm_/, /^fbclid$/]\n});\n\n\n\n\n\n\n\n\n"
+    ],
+    "version": 3
+}
