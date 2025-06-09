@@ -17,9 +17,12 @@
     ],
     "id": "/",
     "lang": "fr",
+    "name": "TaskBoard Widget",
     "orientation": "portrait",
     "scope": ".",
     "screenshots": [],
+    "short_name": "Tasks",
+    "start_url": ".",
     "theme_color": "#317EFB",
     "widgets": [
         {
