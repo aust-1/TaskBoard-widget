@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "TaskBoardWidget (Package)": {
+      "commandName": "MsixPackage"
+    },
+    "TaskBoardWidget (Unpackaged)": {
+      "commandName": "Project"
+    }
+  }
+}
