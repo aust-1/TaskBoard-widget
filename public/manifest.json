@@ -43,6 +43,7 @@
         "client_mode": "focus-existing"
     },
     "name": "TaskBoard Widget",
+    "offline_page": "offline.html",
     "orientation": "portrait",
     "prefer_related_applications": false,
     "protocol_handlers": [
