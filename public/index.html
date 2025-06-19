@@ -1,20 +1,31 @@
 <!DOCTYPE html>
 <html lang="fr">
 
-    <head>
-        <meta charset="utf-8">
-        <meta name="viewport" content="width=device-width,initial-scale=1">
-        <link rel="manifest" href="/TaskBoard-widget/manifest.json">
-        <title>TaskBoard Widget</title>
-    </head>
+  <head>
+    <meta charset="utf-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1">
+    <link rel="manifest" href="/TaskBoard-widget/manifest.json">
+    <title>TaskBoard Widget</title>
+    <style>
+          html, body {
+            height: 100%;
+            margin: 0;
+            overflow: hidden;
+          }
+          body {
+            background: url('background.jpg') no-repeat center center fixed;
+            background-size: cover;
+          }
+        </style>
+  </head>
 
-    <body>
-        <h1>TaskBoard</h1>
-        <!-- dropdown for task lists -->
-        <select id="list-select"></select>
-        <button id="load">Charger les tâches</button>
-        <ul id="tasks"></ul>
-        <script>
+  <body>
+    <h1>TaskBoard</h1>
+    <!-- dropdown for task lists -->
+    <select id="list-select"></select>
+    <button id="load">Charger les tâches</button>
+    <ul id="tasks"></ul>
+    <script>
         // fetch and populate available task lists
         async function loadLists() {
         const res = await fetch('https://taskboard-widget.onrender.com/api/lists');
@@ -68,7 +79,7 @@
   await checkProtocolTask();
   };
   </script>
-        <script>
+    <script>
   if ('registerProtocolHandler' in navigator) {
     navigator.registerProtocolHandler('web+task', `${location.origin}/?task=%s`, 'TaskBoard');
   }
@@ -91,6 +102,6 @@
             });
           }
         </script>
-    </body>
+  </body>
 
 </html>
