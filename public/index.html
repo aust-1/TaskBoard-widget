@@ -27,6 +27,12 @@
           #tasks {
             list-style: none;
             padding: 0;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 1rem;
+          }
+          .list {
+            min-width: 200px;
           }
           .description {
             font-size: smaller;
@@ -47,11 +53,14 @@
           const container = document.getElementById('tasks');
           container.innerHTML = '';
           for (const list of data.lists) {
+            const listDiv = document.createElement('div');
+            listDiv.className = 'list';
             const title = document.createElement('h2');
             title.textContent = list.title;
-            container.appendChild(title);
+            listDiv.appendChild(title);
             const ul = document.createElement('ul');
-            container.appendChild(ul);
+            listDiv.appendChild(ul);
+            container.appendChild(listDiv);
             const resTasks = await fetch('https://taskboard-widget.onrender.com/api/widget-data?listId=' + encodeURIComponent(list.id));
             const tasksData = await resTasks.json();
             if (tasksData.needsAuth) { window.location = 'https://taskboard-widget.onrender.com/auth'; return; }

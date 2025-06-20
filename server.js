@@ -117,9 +117,20 @@ app.get('/api/widget-data', async (req, res) => {
   const listId = req.query.listId || '@default';
 
   try {
-    const response = await tasks.tasks.list(
-        {tasklist: listId, maxResults: 5, showCompleted: false});
-    res.json({needsAuth: false, tasks: response.data.items || []});
+    let items = [];
+    let pageToken;
+    do {
+      const response = await tasks.tasks.list(
+          {tasklist: listId, showCompleted: false, maxResults: 100, pageToken});
+      items = items.concat(response.data.items || []);
+      pageToken = response.data.nextPageToken;
+    } while (pageToken);
+    items.sort((a, b) => {
+      const da = a.due ? new Date(a.due) : new Date(8640000000000000);
+      const db = b.due ? new Date(b.due) : new Date(8640000000000000);
+      return da - db;
+    });
+    res.json({needsAuth: false, tasks: items});
   } catch (err) {
     console.error('Error fetching tasks:', err);
     res.status(500).json({error: 'Failed to fetch tasks'});
@@ -150,9 +161,24 @@ app.get('/api/widget-card', async (req, res) => {
     oAuth2Client.setCredentials(req.session.tokens);
     const tasksApi = google.tasks({version: 'v1', auth: oAuth2Client});
     try {
-      const response = await tasksApi.tasks.list(
-          {tasklist: listId, maxResults: 5, showCompleted: false});
-      tasksData = {needsAuth: false, tasks: response.data.items || []};
+      let items = [];
+      let pageToken;
+      do {
+        const response = await tasksApi.tasks.list({
+          tasklist: listId,
+          showCompleted: false,
+          maxResults: 100,
+          pageToken
+        });
+        items = items.concat(response.data.items || []);
+        pageToken = response.data.nextPageToken;
+      } while (pageToken);
+      items.sort((a, b) => {
+        const da = a.due ? new Date(a.due) : new Date(8640000000000000);
+        const db = b.due ? new Date(b.due) : new Date(8640000000000000);
+        return da - db;
+      });
+      tasksData = {needsAuth: false, tasks: items};
     } catch (err) {
       console.error('Error fetching tasks:', err);
       return res.status(500).json({error: 'Failed to fetch tasks'});
