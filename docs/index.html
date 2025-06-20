@@ -15,46 +15,60 @@
           body {
             background: url('background.jpg') no-repeat center center fixed;
             background-size: cover;
+            color: white;
+            font-family: sans-serif;
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+          }
+          h1, #tasks {
+            text-align: left;
+          }
+          #tasks {
+            list-style: none;
+            padding: 0;
+          }
+          .description {
+            font-size: smaller;
+            display: block;
           }
         </style>
   </head>
 
   <body>
     <h1>TaskBoard</h1>
-    <!-- dropdown for task lists -->
-    <select id="list-select"></select>
-    <button id="load">Charger les tâches</button>
-    <ul id="tasks"></ul>
+    <div id="tasks"></div>
     <script>
-        // fetch and populate available task lists
-        async function loadLists() {
-        const res = await fetch('https://taskboard-widget.onrender.com/api/lists');
-        const data = await res.json();
-        if (data.needsAuth) { window.location = 'https://taskboard-widget.onrender.com/auth'; return; }
-        const select = document.getElementById('list-select');
-        select.innerHTML = '';
-        data.lists.forEach(list => {
-            const opt = document.createElement('option');
-            opt.value = list.id;
-            opt.textContent = list.title;
-            select.appendChild(opt);
-        });
+        // load every list and its tasks
+        async function loadAll() {
+          const res = await fetch('https://taskboard-widget.onrender.com/api/lists');
+          const data = await res.json();
+          if (data.needsAuth) { window.location = 'https://taskboard-widget.onrender.com/auth'; return; }
+          const container = document.getElementById('tasks');
+          container.innerHTML = '';
+          for (const list of data.lists) {
+            const title = document.createElement('h2');
+            title.textContent = list.title;
+            container.appendChild(title);
+            const ul = document.createElement('ul');
+            container.appendChild(ul);
+            const resTasks = await fetch('https://taskboard-widget.onrender.com/api/widget-data?listId=' + encodeURIComponent(list.id));
+            const tasksData = await resTasks.json();
+            if (tasksData.needsAuth) { window.location = 'https://taskboard-widget.onrender.com/auth'; return; }
+            (tasksData.tasks || []).forEach(t => {
+              const li = document.createElement('li');
+              li.textContent = t.title;
+              if (t.notes) {
+                const desc = document.createElement('span');
+                desc.className = 'description';
+                desc.textContent = t.notes;
+                li.appendChild(document.createElement('br'));
+                li.appendChild(desc);
+              }
+              ul.appendChild(li);
+            });
+          }
         }
-
-        // fetch and display tasks for selected list
-  async function loadTasks() {
-  const listId = document.getElementById('list-select').value;
-  const res = await fetch('https://taskboard-widget.onrender.com/api/widget-data?listId=' + encodeURIComponent(listId));
-  const data = await res.json();
-  if (data.needsAuth) { window.location = 'https://taskboard-widget.onrender.com/auth'; return; }
-  const tasksList = document.getElementById('tasks');
-  tasksList.innerHTML = '';
-  (data.tasks || []).forEach(t => {
-      const li = document.createElement('li');
-      li.textContent = t.title;
-      tasksList.appendChild(li);
-  });
-  }
 
   async function checkProtocolTask() {
     const params = new URLSearchParams(window.location.search);
@@ -72,10 +86,8 @@
     }
   }
 
-  document.getElementById('load').onclick = loadTasks;
   window.onload = async () => {
-  await loadLists();
-  await loadTasks();
+  await loadAll();
   await checkProtocolTask();
   };
   </script>
