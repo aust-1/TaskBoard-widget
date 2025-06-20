@@ -23,6 +23,8 @@ Ce projet fournit un petit serveur Node.js permettant d'afficher les tâches d'u
    En cas d'erreur `invalid_grant`, assurez-vous que cette URL correspond exactement à celle configurée dans la console Google.
    Si le message mentionne `code_verifier`, supprimez cette valeur avant l'échange de jeton comme montré dans `server.js`.
 
+3. (Optionnel) placez un fichier `tokens.json` à la racine avec des jetons OAuth2 déjà valides. Si présent, le serveur utilisera automatiquement ces jetons pour authentifier les requêtes sans intervention de l'utilisateur. Les jetons sont également sauvegardés dans ce fichier après la première connexion.
+
 ## Utilisation
 
 Lancez simplement le serveur :
