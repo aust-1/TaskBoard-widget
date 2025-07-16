@@ -1,7 +1,7 @@
 {
   "author": "",
   "bugs": {
-    "url": "https://github.com/aust_1_/TaskBoard-widget/issues"
+    "url": "https://github.com/aust-1/TaskBoard-widget/issues"
   },
   "dependencies": {
     "adaptivecards": "^3.0.5",
@@ -17,14 +17,14 @@
   "devDependencies": {
     "workbox-cli": "^7.3.0"
   },
-  "homepage": "https://aust_1_.github.io/TaskBoard-widget",
+  "homepage": "https://aust-1.github.io/TaskBoard-widget",
   "keywords": [],
   "license": "ISC",
   "main": "index.js",
   "name": "taskboard-widget",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/aust_1_/TaskBoard-widget.git"
+    "url": "git+https://github.com/aust-1/TaskBoard-widget.git"
   },
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1"

@@ -56,13 +56,13 @@
         {
             "id": "/",
             "platform": "webapp",
-            "url": "https://captainbleu.github.io/TaskBoard-widget/manifest.json"
+            "url": "https://aust-1.github.io/TaskBoard-widget/manifest.json"
         }
     ],
     "scope": "/TaskBoard-widget/",
     "scope_extensions": [
         {
-            "origin": "https://captainbleu.github.io",
+            "origin": "https://aust-1.github.io",
             "scopes": [
                 "/TaskBoard-widget/"
             ]
